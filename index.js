@@ -4,14 +4,19 @@ const mongoose = require('mongoose');
 require('dotenv/config.js');
 
 //Routes middleware
-const route1 = require('./routes/route1');
-app.use('/posts', route1);
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+  }));
+
+const postRoute = require('./routes/posts');
+app.use('/posts', postRoute);
 
 //Routes 
 app.get('/',(req, res)=>{
     res.send('Homepage!!');
 })
-
+ 
 mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true }, ()=> console.log('Connected to Mongo!!!'));
 
 // Listening to the server
